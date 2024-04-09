@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oppgave 4 - student 2</title>
+  </head>
+  <body>
+    <input type="button" id="transfer-btn" value="Overføre penger" />
+    <input type="button" id="paybills-btn" value="Betale regninger" />
+    <input type="button" id="change-psw-btn" value="Endre passord" />
+
+    <script>
+      // Knapper
+      var transferBtn = document.getElementById("transfer-btn");
+      var paybillsBtn = document.getElementById("paybills-btn");
+      var changePswBtn = document.getElementById("change-psw-btn");
+
+      // Kontoer til bruker
+      var spendingAccount = 2000;
+      var savings = 10000;
+
+      // Passord innlogg for å betale regning
+      var password = 1234;
+
+      // Overføre penger fra en konto til en annen
+      transferBtn.onclick = transferMoney;
+
+      function transferMoney() {
+        var userTransfer = prompt(
+          "Ønsker du å overføre penger til din brukskonto?"
+        );
+        userTransfer.toLocaleLowerCase.value;
+        if (userTransfer == "ja") {
+          var userMoneyTransfer = parseInt(
+            prompt("Hvor mye ønsker du å overføre?")
+          );
+          userMoneyTransfer.value;
+          if (userMoneyTransfer <= savings) {
+            savings = parseInt(savings) - parseInt(userMoneyTransfer);
+            alert(`Du har nå ${savings}kr på brukskonto`);
+          }
+        } else {
+          alert("Du har ikke foretatt deg noen endringer");
+        }
+      }
+
+      // //Betale regning - må først taste inn passord
+      paybillsBtn.onclick = payBill;
+
+      function payBill() {
+        //regningskonto
+        var billAccount = 3000;
+        //Regning
+        var bill = 500;
+
+        var accountPassword = prompt("Skriv inn passord for å åpne konto");
+
+        if (accountPassword == password) {
+          alert(`Du har for øyeblikket ${billAccount}kr på din regningskonto`);
+          var userBill = prompt(
+            "Men! Du har en ubetalt regning. Ønsker du å betale denne nå?"
+          );
+          if (userBill.toLowerCase() === "ja") {
+            billAccount = parseInt(billAccount) - parseInt(bill);
+            alert(
+              `Nå som regningen er betalt, gjenstår det ${billAccount}kr på din regningskonto.`
+            );
+          }
+        }
+        if (accountPassword != password) {
+          alert(`Du har tastet inn feil passord`);
+        }
+        if (userBill.toLowerCase() === "nei") {
+          alert(
+            `Din saldo er fortsatt ${billAccount}kr, men du har en ubetalt regning med beløp: ${bill}kr`
+          );
+        }
+      }
+
+      //Endre passord
+      changePswBtn.onclick = changeMyPsw;
+
+      function changeMyPsw() {
+        var loginPassword = prompt("Skriv inn ditt passord");
+        if (loginPassword == password) {
+          var chooseChangePsw = prompt(
+            "Du har tastet inn riktig - ønsker du å endre ditt allerede eksisterende passord?"
+          );
+          chooseChangePsw.toLowerCase.value;
+          if (chooseChangePsw == "ja") {
+            var changePsw = prompt("Skriv inn ditt nye passord");
+            password = changePsw;
+            console.log(password);
+          }
+        } else {
+          alert("Du har ikke byttet passord");
+        }
+      }
+    </script>
+  </body>
+</html>

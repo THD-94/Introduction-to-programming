@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oppgave 2 - Miaow Miaow møter fisken</title>
+    <link rel="stylesheet" href="css/oppgave2.css" type="text/css" />
+  </head>
+  <body>
+    <div id="menu-container">
+      <input id="move-left-btn" type="button" value="Venstre" />
+      <input id="move-up-btn" type="button" value="Opp" />
+      <input id="move-right-btn" type="button" value="Høyre" />
+      <input id="move-down-btn" type="button" value="Ned" />
+
+      <div><p id="cookie-points-counter">har: 0 cookies</p></div>
+    </div>
+
+    <div id="game-container">
+      <p>Antall steg: <span id="number-of-steps-span">0</span></p>
+      <img id="miaow-miaow" src="images/miaow-miaow.png" />
+      <img id="the-mighty-fish" src="images/fish.png" />
+
+      <h2 id="fish-room-title">Fiskens rom</h2>
+      <div id="line-div"></div>
+      <!-- denne bruker vi til utvidelsen -->
+      <div id="random-cookie"></div>
+    </div>
+    <div id="dialogue-output-div">
+      <p>Miaow Miaow: <span id="miaow-miaow-says">...</span></p>
+      <p>Fisken: <span id="fish-says">...</span></p>
+    </div>
+
+    <script>
+      var moveLeftBtn = document.getElementById("move-left-btn");
+      var moveUpBtn = document.getElementById("move-up-btn");
+      var moveDownBtn = document.getElementById("move-down-btn");
+      var moveRightBtn = document.getElementById("move-right-btn");
+
+      var miaowMiaow = document.getElementById("miaow-miaow");
+
+      var theMigthyFish = document.getElementById("the-mighty-fish");
+      var dialogueOutputDiv = document.getElementById("dialogue-output-div");
+      var miaowMiaowSays = document.getElementById("miaow-miaow-says");
+      var fishSays = document.getElementById("fish-says");
+      var pixelsMove = 50;
+
+      // ------------------------ UTVIDELSEN - START --------------
+
+      // Vi har gjort bruk av
+      // setTimerout og setTimerInterval
+      // Math.random
+      // Switch - men det lykkes ikke se eksemplet i functionen "gameOver"
+
+      var cookiePoints = 0;
+      var valueOfCookiePoint = 10;
+      var randomCookie = document.getElementById("random-cookie");
+      var cookiePointsCounter = document.getElementById(
+        "cookie-points-counter"
+      );
+
+      alert(
+        "Velkommen til Miaow-Miaow-fiske-spillet, du har nå 20 sekunder, til at se dig omkring og samle så mange cookies som muligt!"
+      );
+
+      setTimeout(gameOver, 20000);
+      setInterval(randomCookiefunction, 5000);
+
+      function gameOver() {
+        if (cookiePoints < 13) {
+          alert("Du har ikke nok cookies, du tabte desverre spillet");
+        } else if (cookiePoints > 13) {
+          alert("Du har en masse cookies og har vundet spillet!");
+        }
+
+        // tenkte at sende et parameter med, men fikk det ikke til
+
+        // switch (points) {
+        //   case points < 13:
+        //     alert("Du har ikke nok cookies, du tabte desverre spillet");
+        //     break;
+
+        //   case points > 13:
+        //     alert("Du har en masse cookies og har vundet spillet!");
+        //     break;
+      }
+
+      // Denne her funktioner hvert 5 sekundt
+      // Den placere cookies på randomme pladser og med forskjellige størrelse
+      function randomCookiefunction() {
+        var randomCookieSpawn1 = Math.floor(Math.random() * 4);
+        var randomCookieSpawn2 = Math.ceil(Math.random() * 4);
+        randomCookie.innerHTML = `<img id="the-one-cookie" src="images/cookie.jpg" style= "width:${randomCookieSpawn2}0px; top: 2${randomCookieSpawn2}0px; left: ${randomCookieSpawn1}00px;"/>`;
+
+        var theOneCookie = document.getElementById("the-one-cookie");
+        theOneCookie.onclick = function () {
+          cookiePoint(theOneCookie);
+        };
+      }
+
+      // Denne funktion utskriver points til nettsiten
+      function cookiePoint(cookie) {
+        console.log(valueOfCookiePoint);
+
+        cookiePoints = cookiePoints + valueOfCookiePoint;
+        cookiePointsCounter.innerHTML = `har: ${cookiePoints} cookies`;
+        cookie.style.display = "none";
+      }
+
+      // ------------------------ UTVIDELSEN - SLUTT --------------
+
+      //   --- OPPGAVE 1 ----
+
+      moveDownBtn.onclick = function () {
+        moveMiaow("down");
+      };
+      moveLeftBtn.onclick = function () {
+        moveMiaow("left");
+      };
+      moveRightBtn.onclick = function () {
+        moveMiaow("right");
+      };
+      moveUpBtn.onclick = function () {
+        moveMiaow("up");
+      };
+
+      /// Vi har fått inspirasjon til vår case fra denne siden:  https://www.plus2net.com/javascript_tutorial/image-move.php'
+      function moveMiaow(move) {
+        switch (move) {
+          case "down":
+            var whereIsMiaowMiaowY = miaowMiaow.offsetTop;
+            whereIsMiaowMiaowY = whereIsMiaowMiaowY + pixelsMove;
+            miaowMiaow.style.top = whereIsMiaowMiaowY + "px";
+            break;
+
+          case "up":
+            var whereIsMiaowMiaowY = miaowMiaow.offsetTop;
+            whereIsMiaowMiaowY = whereIsMiaowMiaowY - pixelsMove;
+            miaowMiaow.style.top = whereIsMiaowMiaowY + "px";
+            break;
+
+          case "left":
+            var whereIsMiaowMiaowX = miaowMiaow.offsetLeft;
+            whereIsMiaowMiaowX = whereIsMiaowMiaowX - pixelsMove;
+            miaowMiaow.style.left = whereIsMiaowMiaowX + "px";
+            break;
+
+          case "right":
+            var whereIsMiaowMiaowX = miaowMiaow.offsetLeft;
+            whereIsMiaowMiaowX = whereIsMiaowMiaowX + pixelsMove;
+            miaowMiaow.style.left = whereIsMiaowMiaowX + "px";
+            break;
+        }
+
+        console.log("Dette er venstre offset", miaowMiaow.offsetLeft);
+        console.log("Dette er top offset", miaowMiaow.offsetTop);
+      }
+
+      var questions = [
+        "Har du noen gang sett en Isbjørn?",
+        "Har du noen gang sett en Skildpadde?",
+        "Har du noen gang spist andre fisk?",
+        "Er du stresset for at jeg kommer til deg?",
+        "Har du noen gang vært på land?",
+      ];
+
+      var answers = [
+        "Det gjør jeg hver dag",
+        "Ja, og jeg elsker det!",
+        "Bare når jeg må",
+        "Noen ganger...",
+        "Only in your dreams",
+      ];
+
+      function getRandomNumber() {
+        var randomQuistion = Math.floor(Math.random() * 5);
+        return randomQuistion;
+      }
+
+      theMigthyFish.onclick = speak;
+      function speak() {
+        if (miaowMiaow.offsetLeft >= 600) {
+          miaowMiaowSays.innerHTML = `${questions[getRandomNumber()]}`;
+          fishSays.innerHTML = `${answers[getRandomNumber()]}`;
+        } else if (miaowMiaow.offsetLeft < 600) {
+          fishSays.innerHTML = "Jeg hører deg ikke, du må komme nærmere!";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oppgave 2 - Miaow Miaow møter fisken</title>
+    <link rel="stylesheet" href="css/oppgave2.css" type="text/css" />
+  </head>
+  <body>
+    <div id="menu-container">
+      <input id="move-left-btn" type="button" value="Venstre" />
+      <input id="move-up-btn" type="button" value="Opp" />
+      <input id="move-right-btn" type="button" value="Høyre" />
+      <input id="move-down-btn" type="button" value="Ned" />
+    </div>
+    <div id="game-container">
+      <p>Antall steg: <span id="number-of-steps-span">0</span></p>
+      <img id="miaow-miaow" src="images/miaow-miaow.png" />
+      <img id="the-mighty-fish" src="images/fish.png" />
+      <h2 id="fish-room-title">Fiskens rom</h2>
+      <div id="line-div"></div>
+    </div>
+    <div id="dialogue-output-div">
+      <p>Miaow Miaow: <span id="miaow-miaow-says">...</span></p>
+      <p>Fisken: <span id="fish-says">...</span></p>
+    </div>
+
+    <script>
+      //Her hentet vi inn alt fra HTML
+      var moveLeftBtn = document.getElementById("move-left-btn");
+      var moveUpBtn = document.getElementById("move-up-btn");
+      var moveDownBtn = document.getElementById("move-down-btn");
+      var moveRightBtn = document.getElementById("move-right-btn");
+
+      var miaowMiaow = document.getElementById("miaow-miaow");
+
+      var theMigthyFish = document.getElementById("the-mighty-fish");
+      var dialogueOutputDiv = document.getElementById("dialogue-output-div");
+      var miaowMiaowSays = document.getElementById("miaow-miaow-says");
+      var fishSays = document.getElementById("fish-says");
+
+      var pixelsMove = 50;
+
+      //   --- OPPGAVE 1 ----
+      //Alle knappene med onclik og sender parameter inn i funksjonen.
+      moveDownBtn.onclick = function () {
+        moveMiaow("down");
+      };
+      moveLeftBtn.onclick = function () {
+        moveMiaow("left");
+      };
+      moveRightBtn.onclick = function () {
+        moveMiaow("right");
+      };
+      moveUpBtn.onclick = function () {
+        moveMiaow("up");
+      };
+
+      //funksjonen som får bildet av katten til å flytte seg rundt på siden.
+      /// Vi har fått inspirasjon til vår switch fra denne siden:  https://www.plus2net.com/javascript_tutorial/image-move.php'
+      function moveMiaow(move) {
+        switch (move) {
+          case "down":
+            var whereIsMiaowMiaowY = miaowMiaow.offsetTop;
+            whereIsMiaowMiaowY = whereIsMiaowMiaowY + pixelsMove;
+            miaowMiaow.style.top = whereIsMiaowMiaowY + "px";
+            break;
+
+          case "up":
+            var whereIsMiaowMiaowY = miaowMiaow.offsetTop;
+            whereIsMiaowMiaowY = whereIsMiaowMiaowY - pixelsMove;
+            miaowMiaow.style.top = whereIsMiaowMiaowY + "px";
+            break;
+
+          case "left":
+            var whereIsMiaowMiaowX = miaowMiaow.offsetLeft;
+            whereIsMiaowMiaowX = whereIsMiaowMiaowX - pixelsMove;
+            miaowMiaow.style.left = whereIsMiaowMiaowX + "px";
+            break;
+
+          case "right":
+            var whereIsMiaowMiaowX = miaowMiaow.offsetLeft;
+            whereIsMiaowMiaowX = whereIsMiaowMiaowX + pixelsMove;
+            miaowMiaow.style.left = whereIsMiaowMiaowX + "px";
+            break;
+        }
+      }
+
+      // -------Oppgave 2 og 3--------
+      // Her er arrays med spørsmål og svar
+      var questions = [
+        "Har du noen gang sett en Isbjørn?",
+        "Har du noen gang sett en Skildpadde?",
+        "Har du noen gang spist andre fisk?",
+        "Er du stresset for at jeg kommer til deg?",
+        "Har du noen gang vært på land?",
+      ];
+
+      var answers = [
+        "Det gjør jeg hver dag",
+        "Ja, og jeg elsker det!",
+        "Bare når jeg må",
+        "Noen ganger...",
+        "Only in your dreams",
+      ];
+
+      // Her er snakkingen som skjer, random, og at fisken sier at katten må komme nærmere, hvis katten er for langt unna.
+      theMigthyFish.onclick = speak;
+      function speak() {
+        if (miaowMiaow.offsetLeft >= 600) {
+          miaowMiaowSays.innerHTML = `${questions[getRandomNumber()]}`;
+          fishSays.innerHTML = `${answers[getRandomNumber()]}`;
+        } else if (miaowMiaow.offsetLeft < 600) {
+          fishSays.innerHTML = "Jeg hører deg ikke, du må komme nærmere!";
+        }
+      }
+      function getRandomNumber() {
+        var randomQuistion = Math.floor(Math.random() * 5);
+        return randomQuistion;
+      }
+
+      // --- Oppgave 4
+
+      // Dette var vårt forslag til hvordan den kunne løses:
+
+      //   if (miaowMiaow.offsetLeft >= 700) {
+      //     var whereIsMiaowMiaowX = miaowMiaow.offsetLeft;
+      //     whereIsMiaowMiaowX = whereIsMiaowMiaowX - whereIsMiaowMiaowX;
+      //     miaowMiaow.style.left = whereIsMiaowMiaowX + "px";
+      //     fishSays.innerHTML = "Du kom for nær meg!";
+      // miaowMiaow.style.left = "0px";
+      //   }
+
+      //------Oppgave 5------
+
+      // Vi tenkte at ville skulle bruke kattens OffsetLeft og OffsetRight, til at difinere rammerne
+      // da kunne vi nemlig lave enten en switch eller if-statement som, undersøker om katten befinder sig inden for rammen.
+    </script>
+  </body>
+</html>

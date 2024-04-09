@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oppgave 4 - student 3</title>
+  </head>
+
+  <body>
+    <!--har laget en overskrift og 5 knapper og to div der bilde og informasjon kommer-->
+    <h1>
+      Trykk på knappene for å få frem bilder, og der etter trykk på bildet for å
+      få mer informasjon
+    </h1>
+    <input type="button" value="Trykk for å se eple" id="apple-btn" />
+    <input type="button" value="Trykk for å se skatten" id="treasure-btn" />
+    <input type="button" value="Trykk for å se robot" id="robot-btn" />
+    <input type="button" value="Trykk for å se palme" id="palm-btn" />
+    <input type="button" value="Trykk for å se katt" id="cat-btn" />
+    <div id="img-container"></div>
+    <div id="info-container"></div>
+    <script>
+      //Henter inn alle elementen inn i JS.
+      var appleBtn = document.getElementById("apple-btn");
+      var treasureBtn = document.getElementById("treasure-btn");
+      var robotBtn = document.getElementById("robot-btn");
+      var palmBtn = document.getElementById("palm-btn");
+      var catBtn = document.getElementById("cat-btn");
+      var imgContainer = document.getElementById("img-container");
+      var infoContainer = document.getElementById("info-container");
+
+      //Lager variabler med informasjon
+      var appleInfo = "Visste du at eple var kjent allerede i Steienalderen?";
+      var treasureInfo =
+        "Visste du at skatteskiste er som et smykkeskrin? Siden her samler du på alle skattene dine";
+      var robotInfo =
+        "Visste du at robotene er laget for å hjelpe oss mennesker?";
+      var palmInfo =
+        "Visste du at ett palmetre har blitt ett symbol på trope, for mange?";
+      var catInfo = "Visste du at katter sover mellom 12- 16t per dag?";
+
+      //Her er alle oncliks som sender parameter inn i funksjonene
+      appleBtn.onclick = function () {
+        showImg("apple", appleInfo);
+      };
+      treasureBtn.onclick = function () {
+        showImg("treasure", treasureInfo);
+      };
+      robotBtn.onclick = function () {
+        showImg("robot", robotInfo);
+      };
+      palmBtn.onclick = function () {
+        showImg("palm", palmInfo);
+      };
+      catBtn.onclick = function () {
+        showImg("cat", catInfo);
+      };
+
+      //funksjonene som viser bilde og informasjon
+      function showImg(name, info) {
+        imgContainer.innerHTML = `<img src="images/${name}.jpg" alt="bilde av epple" id="${name}">`;
+        var nameImg = document.getElementById(name);
+        nameImg.onclick = function () {
+          showInfo(info);
+        };
+      }
+      function showInfo(info) {
+        infoContainer.innerHTML = info;
+      }
+    </script>
+  </body>
+</html>
